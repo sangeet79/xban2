@@ -222,28 +222,28 @@ minetest.register_on_joinplayer(function(player)
 	e.last_seen = os.time()
 end)
 
-minetest.register_chatcommand("xban", {
+minetest.register_chatcommand("xpermaban", {
 	description = "XBan a player",
 	params = "<player> <reason>",
 	privs = { ban=true },
 	func = function(name, params)
 		local plname, reason = params:match("(%S+)%s+(.+)")
 		if not (plname and reason) then
-			return false, "Usage: /xban <player> <reason>"
+			return false, "Usage: /xpermaban <player> <reason>"
 		end
 		local ok, e = xban.ban_player(plname, name, nil, reason)
 		return ok, ok and ("Banned %s."):format(plname) or e
 	end,
 })
 
-minetest.register_chatcommand("xtempban", {
+minetest.register_chatcommand("xban", {
 	description = "XBan a player temporarily",
 	params = "<player> <time> <reason>",
 	privs = { ban=true },
 	func = function(name, params)
 		local plname, time, reason = params:match("(%S+)%s+(%S+)%s+(.+)")
 		if not (plname and time and reason) then
-			return false, "Usage: /xtempban <player> <time> <reason>"
+			return false, "Usage: /xban <player> <time> <reason>"
 		end
 		time = parse_time(time)
 		if time < 60 then
